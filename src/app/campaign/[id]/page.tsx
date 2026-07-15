@@ -19,7 +19,6 @@ export default function CampaignDetailPage() {
   const [related, setRelated] = useState<ICampaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [amount, setAmount] = useState<number>(0);
-  const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState("");
@@ -61,7 +60,6 @@ export default function CampaignDetailPage() {
       await api.post("/contributions/", {
         campaignId: id,
         contributionAmount: amount,
-        message,
       });
       toast.success("Contribution submitted! Awaiting creator approval.");
       router.push("/dashboard/my-contributions");
@@ -169,15 +167,6 @@ export default function CampaignDetailPage() {
                     className="input"
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
-                  />
-                </div>
-                <div>
-                  <label className="label">Message (optional)</label>
-                  <textarea
-                    className="input"
-                    rows={3}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
                   />
                 </div>
                 <button type="submit" disabled={submitting} className="btn-primary w-full">

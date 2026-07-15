@@ -4,10 +4,14 @@ import Link from "next/link";
 import { DEV_REPO_URL, SITE_NAME } from "@/lib/constants";
 
 const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "admin@crowdfund.com";
+const linkedinUrl = process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://www.linkedin.com";
+const facebookUrl = process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com";
 const socials = [
-  { label: "GitHub profile", short: "GH", href: "https://github.com/moshiurrahmandeap11" },
+  { label: "GitHub profile", short: "GH", href: "https://github.com/Khalid-Sifullah-Siam" },
+  { label: "LinkedIn", short: "IN", href: linkedinUrl },
+  { label: "Facebook", short: "FB", href: facebookUrl },
   { label: "Client source", short: "FE", href: DEV_REPO_URL },
-  { label: "Server source", short: "API", href: "https://github.com/moshiurrahmandeap11/special-octo-potato" },
+  { label: "Server source", short: "API", href: "https://github.com/Khalid-Sifullah-Siam/FundHorizon-server" },
 ];
 
 export default function Footer() {

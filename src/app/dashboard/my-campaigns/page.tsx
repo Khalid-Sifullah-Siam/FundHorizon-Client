@@ -12,7 +12,7 @@ export default function MyCampaigns() {
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState<ICampaign | null>(null);
   const [view, setView] = useState<ICampaign | null>(null);
-  const [editForm, setEditForm] = useState({ title: "", shortDescription: "", story: "", rewardInfo: "" });
+  const [editForm, setEditForm] = useState({ title: "", story: "", rewardInfo: "" });
 
   const load = () => {
     api
@@ -27,7 +27,6 @@ export default function MyCampaigns() {
     setEdit(c);
     setEditForm({
       title: c.title,
-      shortDescription: c.shortDescription || c.story.slice(0, 220),
       story: c.story,
       rewardInfo: c.rewardInfo,
     });
@@ -121,17 +120,6 @@ export default function MyCampaigns() {
           <div>
             <label className="label">Story</label>
             <textarea rows={4} className="input" value={editForm.story} onChange={(e) => setEditForm((f) => ({ ...f, story: e.target.value }))} />
-          </div>
-          <div>
-            <label className="label">Short Description</label>
-            <textarea
-              required
-              maxLength={220}
-              rows={2}
-              className="input"
-              value={editForm.shortDescription}
-              onChange={(e) => setEditForm((f) => ({ ...f, shortDescription: e.target.value }))}
-            />
           </div>
           <div>
             <label className="label">Reward Info</label>

@@ -2,7 +2,7 @@ import { CampaignCategory, UserRole } from "./types";
 
 export const DEV_REPO_URL =
   process.env.NEXT_PUBLIC_DEV_REPO_URL ||
-  "https://github.com/moshiurrahmandeap11/scaling-palm-tree";
+  "https://github.com/Khalid-Sifullah-Siam/FundHorizon-Client";
 
 export const SITE_NAME = "FundHorizon";
 

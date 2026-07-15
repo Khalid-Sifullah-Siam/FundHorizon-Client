@@ -4,13 +4,15 @@ FundHorizon is a responsive MERN crowdfunding platform where supporters fund app
 
 ## Submission information
 
-- **Demo user email:** `supporter@crowdfund.com`
-- **Demo user password:** `Supporter@12345`
+- **Demo supporter email:** `supporter@crowdfund.com`
+- **Demo supporter password:** `Supporter@12345`
+- **Demo creator email:** `creator@crowdfund.com`
+- **Demo creator password:** `Creator@12345`
 - **Admin email:** `admin@crowdfund.com`
 - **Admin password:** `Admin@12345`
-- **Live site URL:** deployment URL must be added after the Vercel project is connected
-- **Client repository:** https://github.com/moshiurrahmandeap11/scaling-palm-tree
-- **Server repository:** https://github.com/moshiurrahmandeap11/special-octo-potato
+- **Live site URL:** https://fund-horizon-client.vercel.app
+- **Client repository:** https://github.com/Khalid-Sifullah-Siam/FundHorizon-Client
+- **Server repository:** https://github.com/Khalid-Sifullah-Siam/FundHorizon-server
 
 > These are dedicated assessment credentials. Do not reuse them for a production administrator.
 

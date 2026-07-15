@@ -95,7 +95,7 @@ export default function Withdrawals() {
                 <input
                   type="number"
                   max={info?.availableRaised}
-                  min={1}
+                  min={MIN_WITHDRAWAL_CREDITS}
                   required
                   className="input"
                   value={form.withdrawalCredit}
