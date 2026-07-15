@@ -3,6 +3,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SmoothMotion from "@/components/SmoothMotion";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <Navbar />
-          {children}
+          <SmoothMotion>{children}</SmoothMotion>
           <Footer />
           <Toaster position="top-right" toastOptions={{ duration: 3500 }} />
         </AuthProvider>
