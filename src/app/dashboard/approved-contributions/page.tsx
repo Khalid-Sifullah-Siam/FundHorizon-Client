@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { IContribution } from "@/lib/types";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 import { toast } from "react-hot-toast";
 
 export default function ApprovedContributions() {
@@ -23,7 +24,7 @@ export default function ApprovedContributions() {
       <p className="mt-1 text-slate-500">Contributions that creators have approved.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={4} />
       ) : items.length === 0 ? (
         <p className="mt-8 text-slate-400">No approved contributions yet.</p>
       ) : (

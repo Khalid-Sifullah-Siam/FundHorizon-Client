@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import { IPayment, IWithdrawal } from "@/lib/types";
 import { toast } from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function PaymentHistory() {
   const { user, refreshUser } = useAuth();
@@ -58,7 +59,7 @@ export default function PaymentHistory() {
       </p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={6} />
       ) : isCreator ? (
         withdrawals.length === 0 ? (
           <p className="mt-8 text-slate-400">No withdrawal payments yet.</p>

@@ -182,6 +182,26 @@ export default function CampaignDetailPage() {
         </aside>
       </div>
 
+      {campaign.updates?.length > 0 && (
+        <section className="mt-14 border-t border-slate-200 pt-10">
+          <h2 className="text-2xl font-bold text-slate-800">Campaign Updates</h2>
+          <p className="mt-1 text-sm text-slate-500">Progress news shared by the creator.</p>
+          <div className="mt-6 space-y-4">
+            {[...campaign.updates].reverse().map((update) => (
+              <article key={update._id} className="card-surface p-5">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <h3 className="font-semibold text-slate-800">{update.title}</h3>
+                  <time className="text-xs text-slate-400">
+                    {new Date(update.createdAt).toLocaleDateString()}
+                  </time>
+                </div>
+                <p className="mt-3 whitespace-pre-line text-sm leading-6 text-slate-600">{update.message}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
       {related.length > 0 && (
         <section className="mt-16 border-t border-slate-200 pt-10">
           <div className="flex items-end justify-between gap-4">

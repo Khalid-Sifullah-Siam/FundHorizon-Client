@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { IWithdrawal } from "@/lib/types";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function WithdrawalRequests() {
   const [items, setItems] = useState<IWithdrawal[]>([]);
@@ -38,7 +39,7 @@ export default function WithdrawalRequests() {
       <p className="mt-1 text-slate-500">Process pending creator withdrawals.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={7} />
       ) : items.length === 0 ? (
         <p className="mt-8 text-slate-400">No pending withdrawal requests.</p>
       ) : (

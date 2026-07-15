@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { IContribution } from "@/lib/types";
 import Pagination from "@/components/Pagination";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 import { toast } from "react-hot-toast";
 
 const statusColor: Record<string, string> = {
@@ -41,7 +42,7 @@ export default function MyContributions() {
       <p className="mt-1 text-slate-500">All the campaigns you&apos;ve backed, with status.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={5} />
       ) : items.length === 0 ? (
         <p className="mt-8 text-slate-400">You haven&apos;t made any contributions yet.</p>
       ) : (

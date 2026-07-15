@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { IUser, UserRole } from "@/lib/types";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function ManageUsers() {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -48,7 +49,7 @@ export default function ManageUsers() {
       <p className="mt-1 text-slate-500">Update roles or remove accounts.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={6} />
       ) : (
         <div className="mt-6 overflow-x-auto card-surface">
           <table className="w-full text-sm">

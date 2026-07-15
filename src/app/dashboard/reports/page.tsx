@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { IReport } from "@/lib/types";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function Reports() {
   const [items, setItems] = useState<IReport[]>([]);
@@ -38,7 +39,7 @@ export default function Reports() {
       <p className="mt-1 text-slate-500">Campaigns reported by supporters as suspicious.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={3} />
       ) : items.length === 0 ? (
         <p className="mt-8 text-slate-400">No reports filed. 🎉</p>
       ) : (

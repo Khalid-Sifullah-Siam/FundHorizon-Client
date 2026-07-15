@@ -22,6 +22,13 @@ export type CampaignCategory =
   | "Environment"
   | "Other";
 
+export interface ICampaignUpdate {
+  _id: string;
+  title: string;
+  message: string;
+  createdAt: string;
+}
+
 export interface ICampaign {
   _id: string;
   title: string;
@@ -37,6 +44,7 @@ export interface ICampaign {
   creatorEmail: string;
   amountRaised: number;
   status: CampaignStatus;
+  updates: ICampaignUpdate[];
   createdAt: string;
   updatedAt: string;
 }

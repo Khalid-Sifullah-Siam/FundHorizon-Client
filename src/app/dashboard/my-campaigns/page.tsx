@@ -6,12 +6,15 @@ import { api } from "@/lib/api";
 import { ICampaign } from "@/lib/types";
 import { toast } from "react-hot-toast";
 import Modal from "@/components/Modal";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function MyCampaigns() {
   const [items, setItems] = useState<ICampaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState<ICampaign | null>(null);
   const [view, setView] = useState<ICampaign | null>(null);
+  const [updateTarget, setUpdateTarget] = useState<ICampaign | null>(null);
+  const [updateForm, setUpdateForm] = useState({ title: "", message: "" });
   const [editForm, setEditForm] = useState({ title: "", story: "", rewardInfo: "" });
 
   const load = () => {
@@ -56,6 +59,20 @@ export default function MyCampaigns() {
     }
   };
 
+  const publishUpdate = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!updateTarget) return;
+    try {
+      await api.post(`/campaigns/${updateTarget._id}/updates`, updateForm);
+      toast.success("Campaign update published.");
+      setUpdateTarget(null);
+      setUpdateForm({ title: "", message: "" });
+      load();
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -69,7 +86,7 @@ export default function MyCampaigns() {
       </div>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={6} />
       ) : items.length === 0 ? (
         <p className="mt-8 text-slate-400">You haven&apos;t created any campaigns yet.</p>
       ) : (
@@ -101,6 +118,9 @@ export default function MyCampaigns() {
                     <div className="flex gap-2">
                       <button onClick={() => setView(c)} className="btn-ghost px-3 py-1.5 text-xs">View</button>
                       <button onClick={() => openEdit(c)} className="btn-ghost px-3 py-1.5 text-xs">Update</button>
+                      {c.status === "approved" && (
+                        <button onClick={() => setUpdateTarget(c)} className="btn-ghost px-3 py-1.5 text-xs">Post News</button>
+                      )}
                       <button onClick={() => remove(c._id)} className="btn-danger px-3 py-1.5 text-xs">Delete</button>
                     </div>
                   </td>
@@ -126,6 +146,36 @@ export default function MyCampaigns() {
             <textarea rows={3} className="input" value={editForm.rewardInfo} onChange={(e) => setEditForm((f) => ({ ...f, rewardInfo: e.target.value }))} />
           </div>
           <button type="submit" className="btn-primary w-full">Save Changes</button>
+        </form>
+      </Modal>
+
+      <Modal open={!!updateTarget} onClose={() => setUpdateTarget(null)} title="Post Campaign Update">
+        <form onSubmit={publishUpdate} className="space-y-3">
+          <p className="text-sm text-slate-500">
+            Share progress from <span className="font-semibold">{updateTarget?.title}</span> with supporters.
+          </p>
+          <div>
+            <label className="label">Update title</label>
+            <input
+              required
+              maxLength={120}
+              className="input"
+              value={updateForm.title}
+              onChange={(event) => setUpdateForm((current) => ({ ...current, title: event.target.value }))}
+            />
+          </div>
+          <div>
+            <label className="label">Progress details</label>
+            <textarea
+              required
+              maxLength={2000}
+              rows={5}
+              className="input"
+              value={updateForm.message}
+              onChange={(event) => setUpdateForm((current) => ({ ...current, message: event.target.value }))}
+            />
+          </div>
+          <button type="submit" className="btn-primary w-full">Publish Update</button>
         </form>
       </Modal>
 

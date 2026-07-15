@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { ICampaign } from "@/lib/types";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 import Modal from "@/components/Modal";
 
 export default function ManageCampaigns() {
@@ -37,7 +38,7 @@ export default function ManageCampaigns() {
       <p className="mt-1 text-slate-500">All campaigns across the platform.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={6} />
       ) : (
         <div className="mt-6 overflow-x-auto card-surface">
           <table className="w-full text-sm">

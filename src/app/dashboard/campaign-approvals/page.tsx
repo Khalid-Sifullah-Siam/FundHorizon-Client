@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { ICampaign } from "@/lib/types";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function CampaignApprovals() {
   const [items, setItems] = useState<ICampaign[]>([]);
@@ -38,7 +39,7 @@ export default function CampaignApprovals() {
       <p className="mt-1 text-slate-500">Review and approve newly submitted campaigns.</p>
 
       {loading ? (
-        <p className="mt-8 text-slate-400">Loading...</p>
+        <DashboardListSkeleton columns={6} />
       ) : items.length === 0 ? (
         <p className="mt-8 text-slate-400">No pending campaigns. 🎉</p>
       ) : (

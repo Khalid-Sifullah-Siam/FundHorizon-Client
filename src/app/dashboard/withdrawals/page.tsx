@@ -5,6 +5,7 @@ import { api } from "@/lib/api";
 import { IWithdrawal, PaymentSystem } from "@/lib/types";
 import { CREDITS_PER_DOLLAR_WITHDRAWAL, MIN_WITHDRAWAL_CREDITS } from "@/lib/constants";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 const SYSTEMS: PaymentSystem[] = ["Stripe", "Bkash", "Rocket", "Nagad", "Other"];
 
@@ -23,16 +24,20 @@ export default function Withdrawals() {
     accountNumber: "",
   });
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const load = () => {
-    api.get<{ info: {
+    const infoRequest = api.get<{ info: {
       totalRaised: number;
       pendingCredits: number;
       availableRaised: number;
       withdrawalAmount: number;
       eligible: boolean;
     } }>("/withdrawals/info").then((r) => setInfo(r.info));
-    api.get<{ withdrawals: IWithdrawal[] }>("/withdrawals/my").then((r) => setHistory(r.withdrawals));
+    const historyRequest = api.get<{ withdrawals: IWithdrawal[] }>("/withdrawals/my").then((r) => setHistory(r.withdrawals));
+    Promise.all([infoRequest, historyRequest])
+      .catch(() => toast.error("Failed to load withdrawal information"))
+      .finally(() => setInitialLoading(false));
   };
   useEffect(load, []);
 
@@ -131,7 +136,9 @@ export default function Withdrawals() {
       </div>
 
       <h2 className="mt-10 text-xl font-bold text-slate-800">Payment History</h2>
-      {history.length === 0 ? (
+      {initialLoading ? (
+        <DashboardListSkeleton columns={6} />
+      ) : history.length === 0 ? (
         <p className="mt-3 text-sm text-slate-400">No withdrawal requests yet.</p>
       ) : (
         <div className="mt-4 overflow-x-auto card-surface">

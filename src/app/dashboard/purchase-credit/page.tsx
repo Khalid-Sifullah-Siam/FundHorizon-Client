@@ -5,17 +5,20 @@ import { api } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { CreditPackage } from "@/lib/types";
 import { toast } from "react-hot-toast";
+import DashboardListSkeleton from "@/components/DashboardListSkeleton";
 
 export default function PurchaseCredit() {
   const { refreshUser } = useAuth();
   const [packages, setPackages] = useState<CreditPackage[]>([]);
   const [busy, setBusy] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     api
       .get<{ packages: CreditPackage[] }>("/payments/packages", false)
       .then((r) => setPackages(r.packages))
-      .catch(() => toast.error("Failed to load packages"));
+      .catch(() => toast.error("Failed to load packages"))
+      .finally(() => setLoading(false));
   }, []);
 
   const buy = async (pkg: CreditPackage) => {
@@ -43,7 +46,7 @@ export default function PurchaseCredit() {
       <h1 className="text-2xl font-extrabold text-slate-800">Purchase Credits</h1>
       <p className="mt-1 text-slate-500">10 credits = $1. Choose a package to top up your balance.</p>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {loading ? <DashboardListSkeleton rows={4} columns={4} /> : <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {packages.map((p) => (
           <div key={p.credits} className="card-surface flex flex-col p-6 text-center">
             <p className="text-3xl font-extrabold text-gradient">{p.credits}</p>
@@ -58,7 +61,7 @@ export default function PurchaseCredit() {
             </button>
           </div>
         ))}
-      </div>
+      </div>}
     </div>
   );
 }
