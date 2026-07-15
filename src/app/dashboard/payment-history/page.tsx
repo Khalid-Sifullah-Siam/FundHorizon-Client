@@ -1,13 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/lib/api";
 import { IPayment, IWithdrawal } from "@/lib/types";
 import { toast } from "react-hot-toast";
 import { useAuth } from "@/context/AuthContext";
 
 export default function PaymentHistory() {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const paymentStatus = searchParams.get("status");
+  const sessionId = searchParams.get("session_id");
+  const confirmationStarted = useRef(false);
   const [payments, setPayments] = useState<IPayment[]>([]);
   const [withdrawals, setWithdrawals] = useState<IWithdrawal[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,12 +28,25 @@ export default function PaymentHistory() {
         .finally(() => setLoading(false));
       return;
     }
-    api
-      .get<{ payments: IPayment[] }>("/payments/my")
-      .then((r) => setPayments(r.payments))
-      .catch(() => toast.error("Failed to load payments"))
-      .finally(() => setLoading(false));
-  }, [user]);
+    const loadPayments = async () => {
+      try {
+        if (paymentStatus === "success" && sessionId && !confirmationStarted.current) {
+          confirmationStarted.current = true;
+          await api.post("/payments/confirm", { sessionId });
+          await refreshUser();
+          toast.success("Payment successful. Credits added.");
+          router.replace("/dashboard/payment-history");
+        }
+        const response = await api.get<{ payments: IPayment[] }>("/payments/my");
+        setPayments(response.payments);
+      } catch (error) {
+        toast.error((error as Error).message || "Failed to confirm payment");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadPayments();
+  }, [user, paymentStatus, sessionId, refreshUser, router]);
 
   const isCreator = user?.role === "creator";
 
