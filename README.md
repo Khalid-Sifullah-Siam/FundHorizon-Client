@@ -20,15 +20,6 @@
   <img src="https://img.shields.io/badge/Stripe-Payments-635BFF?logo=stripe&logoColor=white" alt="Stripe" />
 </p>
 
-<p align="center">
-  <img src="./public/images/Screenshot%20(426).png" alt="FundHorizon homepage preview" width="800" />
-</p>
-
-## Links
-
-- **Live Website:** https://fund-horizon-client.vercel.app
-- **Client Repository:** https://github.com/Khalid-Sifullah-Siam/FundHorizon-Client
-- **Server Repository:** https://github.com/Khalid-Sifullah-Siam/FundHorizon-server
 
 ## About the Project
 
