@@ -1,25 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import DashboardSidebar from "@/components/DashboardSidebar";
+import { DASHBOARD_NAV } from "@/lib/constants";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { token, user, loading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const [checked, setChecked] = useState(false);
+  const roleRoutes = user ? DASHBOARD_NAV[user.role] ?? [] : [];
+  const roleHome = roleRoutes[0]?.href ?? "/dashboard";
+  const hasRouteAccess =
+    pathname === "/dashboard" ||
+    roleRoutes.some((item) => pathname === item.href || pathname.startsWith(`${item.href}/`));
 
   useEffect(() => {
     if (!token && !loading) {
       router.replace("/login");
-    } else if (token) {
+    } else if (token && user && !hasRouteAccess) {
+      router.replace(roleHome);
+    } else if (token && user) {
       // Use a microtask to avoid synchronous setState in effect body
       Promise.resolve().then(() => setChecked(true));
     }
-  }, [token, loading, router]);
+  }, [token, user, loading, hasRouteAccess, roleHome, router]);
 
-  if (!token || !user || !checked) {
+  if (!token || !user || !checked || !hasRouteAccess) {
     return (
       <div className="grid min-h-screen place-items-center text-slate-400">
         Loading dashboard...

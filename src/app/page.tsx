@@ -10,6 +10,7 @@ import { api } from "@/lib/api";
 import { ICampaign } from "@/lib/types";
 import CampaignCard from "@/components/CampaignCard";
 import CampaignCardSkeleton from "@/components/CampaignCardSkeleton";
+import { DEFAULT_AVATAR_URL } from "@/lib/avatar";
 import { SITE_NAME } from "@/lib/constants";
 
 const slides = [
@@ -39,21 +40,21 @@ const testimonials = [
     role: "Creator",
     quote:
       "FundHorizon helped me raise credits for my community solar project faster than I imagined.",
-    photo: "https://i.ibb.co/0Q8c0cX/default.png",
+    photo: DEFAULT_AVATAR_URL,
   },
   {
     name: "Liam Carter",
     role: "Supporter",
     quote:
       "I love how easy it is to browse and back meaningful campaigns. The dashboard is beautiful.",
-    photo: "https://i.ibb.co/0Q8c0cX/default.png",
+    photo: DEFAULT_AVATAR_URL,
   },
   {
     name: "Mei Tanaka",
     role: "Creator",
     quote:
       "Clear withdrawal flow and great notifications. My backers always know what's happening.",
-    photo: "https://i.ibb.co/0Q8c0cX/default.png",
+    photo: DEFAULT_AVATAR_URL,
   },
 ];
 

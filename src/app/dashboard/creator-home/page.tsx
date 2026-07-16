@@ -33,7 +33,7 @@ export default function CreatorHome() {
     setBusy(id);
     try {
       await api.patch(`/contributions/${id}/${action}`);
-      toast.success(`Contribution ${action}d.`);
+      toast.success(`Contribution ${action === "approve" ? "approved" : "rejected"}.`);
       setDetail(null);
       load();
     } catch (err) {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { DASHBOARD_NAV, SITE_NAME, DEV_REPO_URL } from "@/lib/constants";
+import { getAvatarUrl } from "@/lib/avatar";
 import type { ReactElement } from "react";
 
 const ICONS: Record<string, ReactElement> = {
@@ -45,7 +46,7 @@ export default function DashboardSidebar({ onNavigate }: { onNavigate?: () => vo
       <div className="flex items-center gap-3 border-y border-slate-100 px-5 py-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={user.photoURL || "https://i.ibb.co/0Q8c0cX/default.png"}
+          src={getAvatarUrl(user.photoURL)}
           alt={user.name}
           className="h-11 w-11 rounded-full border border-slate-200 object-cover"
         />

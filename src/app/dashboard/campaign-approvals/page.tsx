@@ -24,7 +24,7 @@ export default function CampaignApprovals() {
     setBusy(id);
     try {
       await api.patch(`/campaigns/${id}/${action}`);
-      toast.success(`Campaign ${action}d.`);
+      toast.success(`Campaign ${action === "approve" ? "approved" : "rejected"}.`);
       load();
     } catch (err) {
       toast.error((err as Error).message);
